@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import './App.css';
+import Line from './Line';
 
 const Container = styled.div({
   display: 'flex',
@@ -27,7 +28,6 @@ export default function App() {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      console.log(isGameOver);
       if (isGameOver) {
         return;
       }
@@ -68,8 +68,6 @@ export default function App() {
     };
   }, [currentGuess, guesses, isGameOver, solution]);
 
-  console.log(solution);
-
   return (
     <Container>
       {guesses.map((guess, i) => {
@@ -84,39 +82,5 @@ export default function App() {
         );
       })}
     </Container>
-  );
-}
-
-function Line({
-  guess,
-  isFinal,
-  solution,
-}: {
-  guess: string;
-  isFinal: boolean;
-  solution: string;
-}) {
-  return (
-    <div className="line">
-      {Array.from({ length: 5 }).map((_, i) => {
-        const char = guess[i];
-        let className = 'tile';
-
-        if (isFinal) {
-          if (char === solution[i]) {
-            className += ' correct';
-          } else if (solution.includes(char)) {
-            className += ' close';
-          } else {
-            className += ' incorrect';
-          }
-        }
-        return (
-          <div className={className} key={i}>
-            {char}
-          </div>
-        );
-      })}
-    </div>
   );
 }
